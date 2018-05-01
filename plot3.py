@@ -10,17 +10,19 @@ df = pd.read_csv('csv/raw_sessionId_changed_26_April_Watch_and_iPhone.csv')
 # df = df.dropna(subset=['AccX'])
 # df = df.reset_index(drop=True)
 
+section_from = 50
+section_to = 300
 
 data = []
 for x in range(0, 41):
     cur_data = df[df["SessionID"] == x]
-    cur_data = cur_data.iloc[100:300]
+    cur_data = cur_data.iloc[section_from:section_to]
     data.append(cur_data)
 
-data_to_compare_string = 'WatchAccX'
+data_to_compare_string = 'AccX'
 figsize = (15, 7)
 fig, ax = plt.subplots(figsize=figsize)
-plt.title(data_to_compare_string)
+plt.title(f"All sessions {data_to_compare_string}, section: ({section_from}; {section_to})")
 
 
 for i in data:
