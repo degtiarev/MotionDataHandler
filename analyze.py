@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 ## Load Dataset
-df = pd.read_csv('csv/AlekseiPhoneData.csv')
+df = pd.read_csv('csv/raw_26_April_Sensors.csv')
 
 ## Analyze and Visualize Dataset
 
@@ -31,27 +31,41 @@ print(df.isnull().sum())
 # Overview of numerical data
 print(df.describe())
 
-print('Dataset contains ' + str(pd.value_counts(df['IsWalking'].values)[0]) +
-      ' "walk" data samples as well as ' + str(pd.value_counts(df['IsWalking'].values)[1]) + ' "fall" data samples')
+print('Dataset contains ' + str(pd.value_counts(df['RecordID'].values)[0]) +' "safe" data samples as well as '
+      + str(pd.value_counts(df['RecordID'].values)[1]) + ' "relatevely safe" data samples and '
+      +str(pd.value_counts(df['RecordID']).values[2]) + ' "unsafe" data samples')
 
 # Overview of dataset rows
 print(df.head(20))
 
 # Numerical Data Distribution
-SENSOR_DATA_COLUMNS = ['GyroX', 'GyroY', 'GyroZ', 'AccX', 'AccY', 'AccZ', 'MagX', 'MagY', 'MagZ']
+SENSOR_DATA_COLUMNS = ['GyroX1', 'GyroY1', 'GyroZ1', 'AccX1', 'AccY1', 'AccZ1', 'MagX1', 'MagY1', 'MagZ1',
+                       'GyroX2', 'GyroY2', 'GyroZ2', 'AccX2', 'AccY2', 'AccZ2', 'MagX2', 'MagY2', 'MagZ2',
+                       'GyroX3', 'GyroY3', 'GyroZ3', 'AccX3', 'AccY3', 'AccZ3', 'MagX3', 'MagY3', 'MagZ3']
+df = df[np.isfinite(df['GyroX1'])]
+df = df[np.isfinite(df['GyroX2'])]
+df = df[np.isfinite(df['GyroX3'])]
 
-# populate dataframe with IsWalking only
-df_walking_data = pd.DataFrame()
-df_walking_data = df[df.IsWalking == 1]
+# populate dataframe with safe only
+df_safe_data = pd.DataFrame()
+df_safe_data = df[df.RecordID == 0]
 
-# populate dataframe with Falling  only
-df_falling_data = pd.DataFrame()
-df_falling_data = df[df.IsWalking == 0]
+# populate dataframe with relatevely safe  only
+df_relatevely_safe_data = pd.DataFrame()
+df_relatevely_safe_data = df[df.RecordID == 1]
+
+# populate dataframe with unsafe only
+df_unsafe_data = pd.DataFrame()
+df_unsafe_data = df[df.RecordID == 2]
+
+
+
 
 for c in SENSOR_DATA_COLUMNS:
     plt.figure(figsize=(10, 5))
-    plt.title("Sensor data distribution for Falling and Walking")
-    sns.distplot(df_walking_data[c], label='walking')
-    sns.distplot(df_falling_data[c], label='falling')
+    plt.title("Sensor data distribution safe/relatively save/unsafe")
+    sns.distplot(df_safe_data[c], label='safe')
+    sns.distplot(df_relatevely_safe_data[c], label='relatevely safe')
+    sns.distplot(df_unsafe_data[c], label='unsafe')
     plt.legend()
     plt.show()
