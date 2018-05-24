@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-data = pd.read_csv('csv/AlekseiPhoneData.csv')
+data = pd.read_csv('csv/temp/raw_7_March_iPhone_I.csv')
 
 data1 = data[data['IsWalking'] == 1]
 data2 = data[data['IsWalking'] == 0]

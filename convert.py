@@ -14,13 +14,13 @@ with open(os.path.join('', 'model/saved_model.json'), 'r') as f:
     # set general model metadata
     coreml_model.author = 'Aleksei Degtiarev'
     coreml_model.license = 'BSD'
-    coreml_model.short_description = 'Predicts the activity of the user: walking or falling'
+    coreml_model.short_description = 'Predicts the activity of the user: safe, relatively safe, unsafe'
 
     # set model input information
-    coreml_model.input_description['input'] = 'AccX samples'
+    coreml_model.input_description['input'] = 'WatchGyroX and WatchAccY samples'
 
     # set model output information
     coreml_model.output_description['output'] = 'Activity'
 
-    f_name, f_ext = os.path.splitext('model/model')
-    coreml_model.save(os.path.join('', f_name + 'myCOREML'))
+    f_name, f_ext = os.path.splitext('model/')
+    coreml_model.save(os.path.join('', f_name + 'WatchUserActivityType'))

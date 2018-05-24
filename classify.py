@@ -29,10 +29,10 @@ mpl.use('MacOSX')
 import matplotlib.pyplot as plt
 
 # Load Dataset
-df = pd.read_csv('csv/testmy.csv')
+df = pd.read_csv('csv/prediction/WatchGyroXWatchAccY_26_April_Watch_and_iPhone.csv')
 dataset = df.values
-X = dataset[:, 0:12].astype(float)  # sensor data
-Y = dataset[:, 12].astype(int)  # labels
+X = dataset[:, 0:24].astype(float)  # sensor data
+Y = dataset[:, 24].astype(int)  # labels
 
 
 # Define Neural Network Model
@@ -43,10 +43,10 @@ def create_model():
     # Define model
     global model
     model = Sequential()
-    model.add(Dense(15, input_dim=12, activation='relu'))
+    model.add(Dense(15, input_dim=24, activation='relu'))
     model.add(Dense(15, activation='relu'))
     model.add(Dense(15, activation='relu'))
-    model.add(Dense(2, activation='softmax'))
+    model.add(Dense(3, activation='softmax'))
 
     # Compile model
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -88,6 +88,7 @@ fig, ax = plt.subplots(figsize=figsize)
 ax.plot(results.history['val_acc'], linewidth=0.4, color="green")
 ax.plot(results.history['acc'], linewidth=0.4, color="red")
 # plt.figure()
+plt.title("Prediction using WatchGyroX and WatchAccY values")
 plt.show()
 
 # Save Keras Model
